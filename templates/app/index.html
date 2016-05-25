@@ -1,0 +1,206 @@
+<!DOCTYPE HTML>
+{% load staticfiles %}
+<html>
+<head>
+    <title>Recharge - Homepage</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.css' %}">
+    
+    <!--[if lte IE 8]>
+    <script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}"/>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/mods.css' %}">
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="{% static 'assets/css/mods.css' %}"/><![endif]-->
+</head>
+<body class="landing">
+
+<!-- Header -->
+<!-- <header id="header" class="alt">
+    <h1><a href="#">Retrospect</a></h1>
+    
+</header> -->
+
+<nav class="navbar navbar-default">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+      <h2><a class="navbar-brand" href="#">Recharge</a></h2>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#banner">Home</a></li>
+          <li><a href="#one">Apps</a></li>
+        <li><a href="#three">About</a></li>
+        <li><a href="#four">Contact</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+<!-- Banner -->
+<section id="banner">
+
+    <h2>Make a person very happy!</h2>
+    <div class="container">
+     
+        <div class="col-md-4">
+            <select name="_provider" id="provider">
+                <option>Seleccione un Proveedor</option>
+                <option value="Claro">Claro</option>
+                <option value="Orange">Orange</option>
+                <option value="Tricom">Tricom</option>
+                <option value="Viva">Viva</option>
+                <option value="Natcom">Natcom</option>
+                <option value="Digicel">Digicel</option>
+            </select>
+        </div>   
+        
+        <div class="col-md-4">
+            <input type="text" name="_phone" id="phone" placeholder="+(XX) XXXXXX">
+        </div>
+
+        <div class="col-md-4">
+            <input type="text" name="_amount" id="amount" placeholder="$ XX.XX">
+            <!-- <select name="_curr" id="_curr">
+                <option>Monto a recargar</option>
+                <option value="13">$13</option>
+                <option value="20">$20</option>
+                <option value="40">$40</option>
+                <option value="50">$50</option>
+            </select> -->
+        </div>
+    </div>
+    <p></p>
+    <ul class="actions">
+        <li><a href="#" class="button big special">Recargar</a></li>
+    </ul>
+</section>
+
+<!-- One -->
+<section id="one" class="wrapper style1">
+    <div class="inner row">
+
+        <article class="feature left">
+            <span class="image"><img src="{% static 'images/iphone6.jpg' %}" alt=""/></span>
+            <div class="content">
+                <h2>Download our iOS app for free!</h2>
+                <p>The most convenient, safest way to send top-up to your iphone, anytime, anywhere.
+                </p>
+                <ul class="actions-store">
+                    <li>
+                        <a class="button-store" href="#" target="_blank">
+                            <img src="{% static 'images/app-store-img.png' %}" alt="Ding iOS app">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </article>
+        <article class="feature right">
+            <span class="image"><img src="{% static 'images/android.jpg' %}" class="img-responsive"  alt=""/></span>
+            <div class="content">
+                <h2>Download our Android app for free!</h2>
+                <p>The most convenient, safest way to send top-up to your phone or your friends, anytime, anywhere.
+                </p>
+                <ul class="actions-store">
+                    <li>
+                        <a class="button-store" href="#" target="_blank">
+                            <img src="{% static 'images/play-store-image.png' %}" class="img-responsive" alt="Ding iOS app">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </article>
+    </div>
+</section>
+
+
+<!-- Three -->
+<section id="three" class="wrapper style3 special">
+    <div class="inner">
+        <header class="major narrow	">
+            <h2>About Us</h2>
+            <p>
+                Ipsum dolor tempus commodo turpis adipiscing Tempor placerat sed amet accumsan
+                Ipsum dolor tempus commodo turpis adipiscing Tempor placerat sed amet accumsan
+            </p>
+        </header>
+    </div>
+</section>
+
+<!-- Four -->
+<section id="four" class="wrapper style2 special">
+    <div class="inner">
+        <header class="major narrow">
+            <h2>Get in touch</h2>
+            <p>Ipsum dolor tempus commodo adipiscing</p>
+        </header>
+        <form action="#" method="POST">
+            <div class="container 75%">
+                <div class="row uniform 50%">
+                    <div class="6u 12u$(xsmall)">
+                        <input name="name" placeholder="Name" type="text"/>
+                    </div>
+                    <div class="6u$ 12u$(xsmall)">
+                        <input name="email" placeholder="Email" type="email"/>
+                    </div>
+                    <div class="12u$">
+                        <textarea name="message" placeholder="Message" rows="4"></textarea>
+                    </div>
+                </div>
+            </div>
+            <ul class="actions">
+                <li><input type="submit" class="special" value="Submit"/></li>
+                <li><input type="reset" class="alt" value="Reset"/></li>
+            </ul>
+        </form>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer id="footer">
+    <div class="inner">
+        <ul class="icons">
+            <li><a href="#" class="icon fa-facebook">
+                <span class="label">Facebook</span>
+            </a></li>
+            <li><a href="#" class="icon fa-twitter">
+                <span class="label">Twitter</span>
+            </a></li>
+            <li><a href="#" class="icon fa-instagram">
+                <span class="label">Instagram</span>
+            </a></li>
+            <li><a href="#" class="icon fa-linkedin">
+                <span class="label">LinkedIn</span>
+            </a></li>
+        </ul>
+        <ul class="copyright">
+            <li>&copy; Recharge company - 2016.</li>
+        </ul>
+    </div>
+</footer>
+
+<!--Dependencies DEV TODO:Put min files-->
+<script src="{% static 'bower_components/jquery/dist/jquery.js' %}"></script>
+<script src="{% static 'bower_components/angular/angular.js' %}"></script>
+<script src="{% static 'bower_components/angular-animate/angular-animate.js' %}"></script>
+<script src="{% static 'bower_components/bootstrap/dist/js/bootstrap.js' %}"></script>
+<script src="{% static 'bower_components/bootstrap-select/dist/js/bootstrap-select.js' %}"></script>
+
+<!-- Dependencies -->
+<script src="{% static 'assets/js/nav_mod.js' %}"></script>
+
+<!--[if lte IE 8]><script src="{% static 'assets/js/ie/respond.min.js' %}"></script><![endif]-->
+
+</body>
+</html>
