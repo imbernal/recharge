@@ -72,14 +72,14 @@
         </div>
 
         <div class="col-md-4">
-            <input type="text" name="_amount" id="amount" placeholder="$ XX.XX">
-            <!-- <select name="_curr" id="_curr">
+            {#            <input type="text" name="_amount" id="amount" placeholder="$ XX.XX">#}
+            <select name="_curr" id="_curr">
                 <option>Monto a recargar</option>
-                <option value="13">$13</option>
-                <option value="20">$20</option>
-                <option value="40">$40</option>
-                <option value="50">$50</option>
-            </select> -->
+                <option value="1">$1</option>
+{#                <option value="20">$20</option>#}
+{#                <option value="40">$40</option>#}
+{#                <option value="50">$50</option>#}
+            </select>
         </div>
     </div>
     <p></p>
@@ -87,7 +87,7 @@
 
     <form action="{{ paypal_url }}" method="post">
         {% csrf_token %}
-        <input type="hidden" name="amount" value="4">
+        <input type="hidden" id="amount" name="amount">
         <input type="hidden" name="cmd" value="_xclick">
         <input type="hidden" name="business" value="{{ paypal_email }}">
         <input type="hidden" name="item_name" value="Hola">
@@ -95,7 +95,7 @@
         <input type="hidden" name="return" value="{{ paypal_return_url }}">
         <input type="hidden" name="cancel_return" value="{{ paypal_return_url }}/">
 
-        <button type="submit" class="button big special">Recargar</button>
+        <button type="submit" id="sendButton" class="button big special">Recargar</button>
 
     </form>
 </section>
@@ -215,5 +215,13 @@
 
 <!--[if lte IE 8]><script src="{% static 'assets/js/ie/respond.min.js' %}"></script><![endif]-->
 
+<script>
+    $(document).ready(function () {
+        $('#sendButton').onclick(function () {
+            var amount  = $('#_curr').val();
+            $('#amount').val(amount);
+        });
+    });
+</script>
 </body>
 </html>
