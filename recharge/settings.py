@@ -83,26 +83,6 @@ DATABASES = {
     }
 }
 
-
-# Password validation
-# https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
-
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
-
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
@@ -116,6 +96,14 @@ USE_L10N = True
 
 USE_TZ = True
 
+# RESOURCES_DIR = '/media/shared/src/django-paypal-store-example/samplesite/resources/'
+PAYPAL_PDT_TOKEN = '*** PAYPAY PDT TOKEN ***'
+PAYPAL_EMAIL = 'imbernal9203@gmail.com'
+PAYPAL_RETURN_URL = 'http://127.0.0.1:8000'
+
+
+PAYPAL_URL = 'https://www.sandbox.paypal.com/au/cgi-bin/webscr'
+PAYPAL_PDT_URL = 'https://www.sandbox.paypal.com/au/cgi-bin/webscr'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
