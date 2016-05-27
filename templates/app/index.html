@@ -6,6 +6,7 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
     <link rel="stylesheet" type="text/css" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/bootstrap-social.css' %}">
 
     <!--[if lte IE 8]>
     <script src="assets/js/ie/html5shiv.js"></script><![endif]-->
@@ -50,12 +51,44 @@
                     <li><a href="{% url 'logout' %}">Logout({{ user }})</a></li>
 
                 {% else %}
-                    <li><a href="/accounts/twitter/login">Login</a></li>
+                    <li><a id="AccesLogin" href="#myModal" data-toggle="modal" data-target="#myModal">Accede</a></li>
                 {% endif %}
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="loginModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="buttonClose" data-dismiss="modal" aria-label="Close">&times;</span>
+                <h4 class="modal-title" id="loginModal">Accede con una de tus redes sociales8</h4>
+            </div>
+            <div class="row modal-body">
+                <div class="col-xs-12 social-buttons">
+                    <div class="col-md-4 fb">
+                        <a href="/accounts/facebook/login" class="btn btn-block btn-social btn-facebook">
+                            <span class="fa fa-facebook"></span> Facebook
+                        </a>
+                    </div>
+                    <div class="col-md-4 tw">
+                        <a href="/accounts/twitter/login" class="btn btn-block btn-social btn-twitter">
+                            <span class="fa fa-twitter"></span> Twitter
+                        </a>
+                    </div>
+                    <div class="col-md-4 gplus">
+                        <a href="/accounts/google/login" class="btn btn-block btn-social btn-google">
+                            <span class="fa fa-google"></span> Google+
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!-- Banner -->
 <section id="banner">
@@ -64,7 +97,7 @@
     <div class="container">
 
         <div class="col-md-4">
-            <select name="_provider" id="provider">
+            <select required name="_provider" id="provider">
                 <option>Seleccione un Proveedor</option>
                 <option value="Claro">Claro</option>
                 <option value="Orange">Orange</option>
@@ -76,12 +109,12 @@
         </div>
 
         <div class="col-md-4">
-            <input type="text" name="_phone" id="phone" placeholder="+(XX) XXXXXX">
+            <input type="text" required name="_phone" id="phone" placeholder="+(XX) XXXXXX">
         </div>
 
         <div class="col-md-4">
             {#            <input type="text" name="_amount" id="amount" placeholder="$ XX.XX">#}
-            <select name="_curr" id="_curr">
+            <select required name="_curr" id="_curr">
                 <option>Monto a recargar</option>
                 <option value="1">$1</option>
                 {#                <option value="20">$20</option>#}
@@ -93,18 +126,16 @@
     <p></p>
 
 
-    <form action="{{ paypal_url }}" method="post">
+    <form action="{{ paypal_url }}" method="post" id="form">
         {% csrf_token %}
-        <input type="hidden" id="amount" name="amount">
-        <input type="hidden" name="cmd" value="_xclick">
-        <input type="hidden" name="business" value="{{ paypal_email }}">
-        <input type="hidden" name="item_name" id="phonePaypal">
-        <input type="hidden" name="currency_code" value="USD">
-        <input type="hidden" name="return" value="{{ paypal_return_url }}">
-        <input type="hidden" name="cancel_return" value="{{ paypal_return_url }}/">
-
+        <input type="hidden" id="amount" name="amount" required>
+        <input type="hidden" name="cmd" value="_xclick" required>
+        <input type="hidden" name="business" value="{{ paypal_email }}" required>
+        <input type="hidden" name="item_name" id="phonePaypal" required>
+        <input type="hidden" name="currency_code" value="USD" required>
+        <input type="hidden" name="return" value="{{ paypal_return_url }}" required>
+        <input type="hidden" name="cancel_return" value="{{ paypal_return_url }}/" required>
         <button type="submit" id="sendButton" class="button big special">Recargar</button>
-
     </form>
 </section>
 <!-- One -->
@@ -115,7 +146,8 @@
             <span class="image"><img src="{% static 'images/iphone6.jpg' %}" alt=""/></span>
             <div class="content">
                 <h2>Descarga gratis nuestra app de iOS!</h2>
-                <p>La forma más conveniente y segura, de recargar a tus familiares y amigos desde tu iPhone en cualquier momento y lugar.
+                <p>La forma más conveniente y segura, de recargar a tus familiares y amigos desde tu iPhone en cualquier
+                    momento y lugar.
                 </p>
                 <ul class="actions-store">
                     <li>
@@ -130,7 +162,8 @@
             <span class="image"><img src="{% static 'images/android.jpg' %}" class="img-responsive" alt=""/></span>
             <div class="content">
                 <h2>Descarga gratis nuestra app de Android!</h2>
-                <p>La forma mas conveniente y segura, de recargar a tus familiares y amigos desde tu Smartphone Android en cualquier momento y lugar.
+                <p>La forma mas conveniente y segura, de recargar a tus familiares y amigos desde tu Smartphone Android
+                    en cualquier momento y lugar.
                 </p>
                 <ul class="actions-store">
                     <li>
@@ -213,13 +246,11 @@
 
 <!--Dependencies DEV TODO:Put min files-->
 <script src="{% static 'bower_components/jquery/dist/jquery.js' %}"></script>
-<script src="{% static 'bower_components/angular/angular.js' %}"></script>
-<script src="{% static 'bower_components/angular-animate/angular-animate.js' %}"></script>
 <script src="{% static 'bower_components/bootstrap/dist/js/bootstrap.js' %}"></script>
-<script src="{% static 'bower_components/bootstrap-select/dist/js/bootstrap-select.js' %}"></script>
 
 <!-- Dependencies -->
 <script src="{% static 'assets/js/nav_mod.js' %}"></script>
+<script src="{% static 'assets/js/jquery.validate.js' %}"></script>
 
 <!--[if lte IE 8]><script src="{% static 'assets/js/ie/respond.min.js' %}"></script><![endif]-->
 
@@ -234,8 +265,40 @@
         var phoneNumber = $('#phone').val();
         $('#phonePaypal').val(phoneNumber);
 
+
+    });
+
+    $('#AccesLogin').on('click', function () {
+        $('#myModal').modal();
     });
 
 </script>
+{% if user.is_authenticated %}
+    <script type="javascript">
+        $('#sendButton').on('click', function () {
+            var form = $('#form');
+            form.validate({
+                rules:{
+                    amount: "required",
+                    item_name: "required"
+                },
+                messages:{
+                    amount: "Seleccione un monto"
+                },
+                submitHandler: function(form){
+                    form.submit();
+                }
+            });
+            
+        });
+    </script>
+{% else %}
+    <script>
+        $('#sendButton').click(function (e) {
+            e.preventDefault();
+            $('#myModal').modal();
+        });
+    </script>
+{% endif %}
 </body>
 </html>

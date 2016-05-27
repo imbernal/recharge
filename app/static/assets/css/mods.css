@@ -50,3 +50,23 @@
 .navbar.scrolled {
   background: rgba(81,186,164,0.72);
 }
+.social-buttons div a {
+  text-decoration: none;
+}
+.buttonClose {
+  float: right;
+  font-size: 19px;
+  font-weight: bold;
+}
+.modal-title {
+  padding-top: 8px !important;
+}
+.fb,
+.gplus,
+.tw {
+  padding-left: 0;
+  padding-bottom: 5px;
+}
+.social-buttons {
+  padding-bottom: 15px;
+}

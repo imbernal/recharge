@@ -1,57 +1,80 @@
 center(wo)
-    margin-left 0% - (wo / 2)
-    left 50%
+  margin-left 0% - (wo / 2)
+  left 50%
 
 .button-store
-	img
-		width 140px
+  img
+    width 140px
 
 ::-webkit-input-placeholder
-	color white !important
-	font-size 13px
+  color white !important
+  font-size 13px
+
 ::-moz-placeholder
-	color white !important
-	font-size 13px
+  color white !important
+  font-size 13px
+
 ::-ms-input-placeholder
-	color white !important
-	font-size 13px
+  color white !important
+  font-size 13px
 
 transition(elem, time, anim)
-    -moz-transition elem time anim
-    -o-transition elem time anim
-    -ms-transition elem time anim
-    transition elem time anim
+  -moz-transition elem time anim
+  -o-transition elem time anim
+  -ms-transition elem time anim
+  transition elem time anim
 
 .navbar
-	position fixed
-	width 100%
-	-webkit-border-radius 0
-	-moz-border-radius 0
-	-ms-border-radius 0
-	-o-border-radius 0
-	border-radius 0
-	background-color transparent
-	border-color transparent
-	z-index 100
-	transition(all, 0.6s, ease-out)
-	a
-		text-decoration none
-		color white !important
-	a:hover
-		color #51BAA4 !important
-	button.navbar-toggle
-		min-width 0
-		border 0
-		padding 0
-		margin 0
-		float left
-		
-	.navbar-brand
-		position relative
-		padding 15px 15px 0 15px
-	
-	&.scrolled
-    		background rgba(81, 186, 164, 0.72) //NON-IE
+  position fixed
+  width 100%
+  -webkit-border-radius 0
+  -moz-border-radius 0
+  -ms-border-radius 0
+  -o-border-radius 0
+  border-radius 0
+  background-color transparent
+  border-color transparent
+  z-index 100
+  transition(all, 0.6s, ease-out)
+  a
+    text-decoration none
+    color white !important
+  a:hover
+    color #51BAA4 !important
+  button.navbar-toggle
+    min-width 0
+    border 0
+    padding 0
+    margin 0
+    float left
 
+  .navbar-brand
+    position relative
+    padding 15px 15px 0 15px
 
-	
+  &.scrolled
+    background rgba(81, 186, 164, 0.72)
+
+//NON-IE
+
+.social-buttons
+  div
+    a
+      text-decoration none
+
+.buttonClose
+  float right
+  font-size 19px
+  font-weight bold
+
+.modal-title
+  padding-top 8px !important
+
+.fb
+.gplus
+.tw
+  padding-left 0
+  padding-bottom 5px
+
+.social-buttons
+  padding-bottom 15px
