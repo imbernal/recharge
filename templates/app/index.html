@@ -47,10 +47,10 @@
 
                 {% if user.is_authenticated %}
 
-                    <li><a href="/logout">{{ user }}</a></li>
+                    <li><a href="{% url 'logout' %}">Logout({{ user }})</a></li>
 
                 {% else %}
-                    <li><a href="/accounts/facebook/login">Login</a></li>
+                    <li><a href="/accounts/twitter/login">Login</a></li>
                 {% endif %}
             </ul>
         </div><!-- /.navbar-collapse -->

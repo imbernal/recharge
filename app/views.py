@@ -2,8 +2,9 @@ import requests
 
 # Create your views here.
 from app import models
+from django.contrib import auth
 from django.core.urlresolvers import reverse
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -36,3 +37,7 @@ def purchased(request):
                                       context_instance=RequestContext(request))
     else:  # no tx
         return render_to_response('error.html', {'error': "No transaction specified"}, context_instance=RequestContext(request))
+
+def logout(request):
+    auth.logout(request)
+    return redirect(reverse('home'))
