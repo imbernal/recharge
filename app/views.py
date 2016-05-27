@@ -11,14 +11,15 @@ from django.shortcuts import render_to_response, get_object_or_404, render, redi
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 
-import app.models
+from .models import PaypalOption
 import paypal
 
 
 def homepage(request):
+    paypal_option = PaypalOption.objects.get(pk=1)
     # r = requests.get('https://prod01.midas-card.com/plataforma/ws2/Balance.midas?parametros=/')
-    return render(request, 'app/index.html', {'paypal_url': settings.PAYPAL_URL, 'paypal_email': settings.PAYPAL_EMAIL,
-                                              'paypal_return_url': settings.PAYPAL_RETURN_URL})
+    return render(request, 'app/index.html', {'paypal_url': paypal_option.paypal_url, 'paypal_email': paypal_option.paypal_email,
+                                              'paypal_return_url': paypal_option.return_url})
 
 def purchased(request):
     # resource = get_object_or_404( models.Resource, pk=id )

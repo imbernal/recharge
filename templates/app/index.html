@@ -40,10 +40,18 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#banner">Home</a></li>
+                <li><a href="#banner">Inicio</a></li>
                 <li><a href="#one">Apps</a></li>
-                <li><a href="#three">About</a></li>
-                <li><a href="#four">Contact</a></li>
+                <li><a href="#three">Acerca de </a></li>
+                <li><a href="#four">Contactenos</a></li>
+
+                {% if user.is_authenticated %}
+
+                    <li><a href="/logout">{{ user }}</a></li>
+
+                {% else %}
+                    <li><a href="/accounts/facebook/login">Login</a></li>
+                {% endif %}
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
@@ -52,7 +60,7 @@
 <!-- Banner -->
 <section id="banner">
 
-    <h2>Make a person very happy!</h2>
+    <h2>Haz muy feliz a una Persona!</h2>
     <div class="container">
 
         <div class="col-md-4">
@@ -76,9 +84,9 @@
             <select name="_curr" id="_curr">
                 <option>Monto a recargar</option>
                 <option value="1">$1</option>
-{#                <option value="20">$20</option>#}
-{#                <option value="40">$40</option>#}
-{#                <option value="50">$50</option>#}
+                {#                <option value="20">$20</option>#}
+                {#                <option value="40">$40</option>#}
+                {#                <option value="50">$50</option>#}
             </select>
         </div>
     </div>
@@ -90,7 +98,7 @@
         <input type="hidden" id="amount" name="amount">
         <input type="hidden" name="cmd" value="_xclick">
         <input type="hidden" name="business" value="{{ paypal_email }}">
-        <input type="hidden" name="item_name" value="Hola">
+        <input type="hidden" name="item_name" id="phonePaypal">
         <input type="hidden" name="currency_code" value="USD">
         <input type="hidden" name="return" value="{{ paypal_return_url }}">
         <input type="hidden" name="cancel_return" value="{{ paypal_return_url }}/">
@@ -106,8 +114,8 @@
         <article class="feature left">
             <span class="image"><img src="{% static 'images/iphone6.jpg' %}" alt=""/></span>
             <div class="content">
-                <h2>Download our iOS app for free!</h2>
-                <p>The most convenient, safest way to send top-up to your iphone, anytime, anywhere.
+                <h2>Descarga gratis nuestra app de iOS!</h2>
+                <p>La forma más conveniente y segura, de recargar a tus familiares y amigos desde tu iPhone en cualquier momento y lugar.
                 </p>
                 <ul class="actions-store">
                     <li>
@@ -121,8 +129,8 @@
         <article class="feature right">
             <span class="image"><img src="{% static 'images/android.jpg' %}" class="img-responsive" alt=""/></span>
             <div class="content">
-                <h2>Download our Android app for free!</h2>
-                <p>The most convenient, safest way to send top-up to your phone or your friends, anytime, anywhere.
+                <h2>Descarga gratis nuestra app de Android!</h2>
+                <p>La forma mas conveniente y segura, de recargar a tus familiares y amigos desde tu Smartphone Android en cualquier momento y lugar.
                 </p>
                 <ul class="actions-store">
                     <li>
@@ -216,12 +224,18 @@
 <!--[if lte IE 8]><script src="{% static 'assets/js/ie/respond.min.js' %}"></script><![endif]-->
 
 <script>
-    $(document).ready(function () {
-        $('#sendButton').onclick(function () {
-            var amount  = $('#_curr').val();
-            $('#amount').val(amount);
-        });
+
+    console.log("ASAs");
+    $('#sendButton').on('click', function () {
+
+        var amount = $('#_curr').val();
+        $('#amount').val(amount);
+
+        var phoneNumber = $('#phone').val();
+        $('#phonePaypal').val(phoneNumber);
+
     });
+
 </script>
 </body>
 </html>
