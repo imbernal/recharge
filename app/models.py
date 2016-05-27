@@ -17,6 +17,9 @@ from django.contrib.auth.models import User
 #   purchased_at = models.DateTimeField(auto_now_add=True)
 #   tx = models.CharField( max_length=250 )
 
+class AboutUs(models.Model):
+  text = models.CharField(max_length=250)
+
 class PaypalOption(models.Model):
   pdt_token = models.CharField(max_length=250)
   paypal_email = models.EmailField()
