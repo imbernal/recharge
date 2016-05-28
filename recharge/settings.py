@@ -148,7 +148,7 @@ USE_TZ = True
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 # STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
-DISABLE_COLLECTSTATIC = 1
+
 
 
 MIDAS_URL = 'https://prod01.midas-card.com/plataforma/ws2/'
