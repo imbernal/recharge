@@ -13,31 +13,45 @@ from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 
 from .models import *
+
 import paypal
 
 
 def homepage(request):
     paypal_option = PaypalOption.objects.get(pk=1)
+    appDescription = AppsDescription.objects.get(pk=1)
     about_us = AboutUs.objects.get(pk=1)
     # r = requests.get('https://prod01.midas-card.com/plataforma/ws2/Balance.midas?parametros=/')
-    return render(request, 'app/index.html', {'paypal_url': paypal_option.paypal_url, 'paypal_email': paypal_option.paypal_email,
-                                              'paypal_return_url': paypal_option.return_url , 'about_us':about_us })
+    return render(request, 'app/index.html',
+                  {'paypal_url': paypal_option.paypal_url, 'paypal_email': paypal_option.paypal_email,
+                   'paypal_return_url': paypal_option.return_url, 'about_us': about_us,
+                   'appDescription': appDescription})
+
 
 def purchased(request):
     # resource = get_object_or_404( models.Resource, pk=id )
     # user = get_object_or_404( User, pk=uid )
-    if request.REQUEST.has_key('tx'):
-        tx = request.REQUEST['tx']
+    # if request.REQUEST.has_key('tx'):
+    #     tx = request.REQUEST['tx']
+    #
+    #     result = paypal.Verify(tx)
+    #     if result.success():  # valid
+    #         #   todo: incorpporar uso de la api de midas
+    #         return redirect(reverse('home'))
+    #     else:  # didn't validate
+    #         return render_to_response('error.html', {'error': "Failed to validate payment"},
+    #                                   context_instance=RequestContext(request))
+    # else:  # no tx
+    provider = request.POST['_provider']
+    phone = request.POST['_phone']
+    monto = request.POST['_curr']
 
-        result = paypal.Verify(tx)
-        if result.success():  # valid
-            #   todo: incorpporar uso de la api de midas
-            return redirect(reverse('home'))
-        else:  # didn't validate
-            return render_to_response('error.html', {'error': "Failed to validate payment"},
-                                      context_instance=RequestContext(request))
-    else:  # no tx
-        return render_to_response('error.html', {'error': "No transaction specified"}, context_instance=RequestContext(request))
+    a = settings.MIDAS_URL + provider + '.midas?parametros=punto1-00001/' + settings.MIDAS_USER_ID + '/'+ settings.MIDAS_PASSWORD+'/'+phone+'/'+monto
+    r = requests.get(a)
+
+    return render_to_response('error.html', {'error': "No transaction specified" , 'r': r},
+                              context_instance=RequestContext(request))
+
 
 def logout(request):
     auth.logout(request)

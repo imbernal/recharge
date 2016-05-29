@@ -3,3 +3,4 @@ from app.models import *
 # Register your models here.
 admin.site.register(PaypalOption)
 admin.site.register(AboutUs)
+admin.site.register(AppsDescription)

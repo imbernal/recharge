@@ -164,11 +164,11 @@ DATABASES['default'].update(db_from_env)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 
-STATIC_URL = 'static/'
-STATIC_ROOT = ('static/assets')
+STATIC_URL = '/static/'
+STATIC_ROOT = 'static/'
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
-    os.path.join(PROJECT_ROOT),
+    os.path.join(PROJECT_ROOT , '/static/'),
 )
 
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
