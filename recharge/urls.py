@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from app import views
+from static import settings
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -23,4 +24,5 @@ urlpatterns = [
     url(r'^accounts/', include('allauth.urls')),
     url(r'^logout/',views.logout,name='logout'),
     url(r'^purchased/',views.purchased,name='purchased'),
+    url(r'^static/(?P<path>.*)$','django.views.static.serve',{'document_root': settings.STATIC_ROOT})
 ]
