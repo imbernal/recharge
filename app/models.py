@@ -26,6 +26,9 @@ class AppsDescription(models.Model):
   androidTitulo = models.CharField(max_length=250)
   androidDescripcion = models.CharField(max_length=250)
 
+class Transection(models.Model):
+  money = models.CharField(max_length=250)
+
 class PaypalOption(models.Model):
   pdt_token = models.CharField(max_length=250)
   paypal_email = models.EmailField()

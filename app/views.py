@@ -46,10 +46,35 @@ def purchased(request):
     phone = request.POST['_phone']
     monto = request.POST['_curr']
 
-    a = settings.MIDAS_URL + provider + '.midas?parametros=punto1-00001/' + settings.MIDAS_USER_ID + '/'+ settings.MIDAS_PASSWORD+'/'+phone+'/'+monto
-    r = requests.get(a)
+    trans = Transection()
+    trans.money = monto
+    trans.save()
 
-    return render_to_response('error.html', {'error': "No transaction specified" , 'r': r},
+    urlPost = settings.MIDAS_URL + provider + '.midas?parametros=' + 'punto54-' + str(trans.id) + '/' + settings.MIDAS_USER_ID + '/' + settings.MIDAS_PASSWORD+ '/'+ str(phone) +'/'+str(monto)
+    r = requests.post(urlPost).text
+
+    result = r.split('/')
+    resultText=''
+
+    if result[0]=='00':
+        return redirect(reverse('home'))
+
+    if result[0]=='11':
+        resultText = 'Balance Insuficiente.'
+
+    if result[0]=='12':
+        resultText = 'Numero de Telefono Invalido.'
+
+    if result[0]=='13':
+        resultText = 'Monto no permitido.'
+
+    if result[0]=='15':
+        resultText = 'Problemas de comunicación con el proveedor.'
+
+    if result[0]=='16':
+        resultText = 'Recarga detectada como duplicada.'
+
+    return render_to_response('error.html', {'error': resultText},
                               context_instance=RequestContext(request))
 
 
