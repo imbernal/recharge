@@ -77,7 +77,6 @@ def purchased(request):
     return render_to_response('error.html', {'error': resultText},
                               context_instance=RequestContext(request))
 
-
 def logout(request):
     auth.logout(request)
     return redirect(reverse('home'))
