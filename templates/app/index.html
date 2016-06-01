@@ -112,14 +112,14 @@
             </div>
 
             <div class="col-md-4">
-                <input type="text" required name="_phone" id="phone" placeholder="+(XX) XXXXXX">
+                <input type="text"  required name="_phone" id="phone" placeholder="+(XX) XXXXXX">
             </div>
 
             <div class="col-md-4">
                 {#            <input type="text" name="_amount" id="amount" placeholder="$ XX.XX">#}
                 <select  name="_curr" id="_curr" required>
                     <option value="">Monto a recargar</option>
-                    <option value="$20">$15</option>
+                    <option value="1">$15</option>
                     {#                <option value="20">$20</option>#}
                     {#                <option value="40">$40</option>#}
                     {#                <option value="50">$50</option>#}
@@ -245,12 +245,12 @@
 <!-- Dependencies -->
 <script src="{% static 'assets/js/nav_mod.js' %}"></script>
 <script src="{% static 'assets/js/jquery.validate.js' %}"></script>
+{#<script src="{% static 'assets/js/phoneValidate.js' %}"></script>#}
 
 <!--[if lte IE 8]><script src="{% static 'assets/js/ie/respond.min.js' %}"></script><![endif]-->
 
 <script>
 
-    console.log("ASAs");
     $('#sendButton').on('click', function () {
 
         var amount = $('#_curr').val();
@@ -259,30 +259,25 @@
         var phoneNumber = $('#phone').val();
         $('#phonePaypal').val(phoneNumber);
 
-
     });
 
-    $('#AccesLogin').on('click', function () {
-        $('#myModal').modal();
+    $('#form').validate({
+        rules:{
+            phone:{
+                required: true,
+                phoneUS: true
+            }
+        }
     });
 
 </script>
-{#{% if user.is_authenticated %}#}
+
+
     <script type="javascript">
         $('#sendButton').on('click', function () {
-
             form.submit();
-
-
         });
     </script>
-{#{% else %}#}
-{#    <script>#}
-{#        $('#sendButton').click(function (e) {#}
-{#            e.preventDefault();#}
-{#            $('#myModal').modal();#}
-{#        });#}
-{#    </script>#}
-{#{% endif %}#}
+
 </body>
 </html>

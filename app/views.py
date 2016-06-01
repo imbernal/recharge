@@ -1,5 +1,6 @@
 import requests
-import timeit
+import time
+
 # Create your views here.
 from app import models
 from django.contrib import auth
@@ -50,33 +51,104 @@ def purchased(request):
     trans.money = monto
     trans.save()
 
-    urlPost = settings.MIDAS_URL + provider + '.midas?parametros=' + 'punto54-' + str(trans.id) + '/' + settings.MIDAS_USER_ID + '/' + settings.MIDAS_PASSWORD+ '/'+ str(phone) +'/'+str(monto)
-    r = requests.post(urlPost).text
+    urlPost = settings.MIDAS_URL + provider + '.midas?parametros=' + 'punto54-' + str(
+        trans.id) + '/' + settings.MIDAS_USER_ID + '/' + settings.MIDAS_PASSWORD + '/' + str(phone) + '/' + str(monto)
 
-    result = r.split('/')
-    resultText=''
+    r = requests.get(urlPost, timeout=46)
 
-    if result[0]=='00':
-        return redirect(reverse('home'))
+    requestTime = r.elapsed.total_seconds()
 
-    if result[0]=='11':
-        resultText = 'Balance Insuficiente.'
+    resultText = ''
 
-    if result[0]=='12':
-        resultText = 'Numero de Telefono Invalido.'
+    if requestTime > 45:
 
-    if result[0]=='13':
-        resultText = 'Monto no permitido.'
+        urlPost = settings.MIDAS_URL + 'Verificacion.midas?parametros=' + 'punto54-' + str(
+            trans.id) + '/' + settings.MIDAS_USER_ID + '/' + settings.MIDAS_PASSWORD
 
-    if result[0]=='15':
-        resultText = 'Problemas de comunicación con el proveedor.'
+        r = requests.get(urlPost)
 
-    if result[0]=='16':
-        resultText = 'Recarga detectada como duplicada.'
+        requestTime = r.elapsed.total_seconds()
+
+        if requestTime > 10:  # si la verificacion se demora 10 segundo hago 3 anulaciones
+            for i in range(1, 5):
+                urlPost = settings.MIDAS_URL + 'Reverso.midas?parametros=' + 'punto54-' + str(
+                    trans.id) + '/' + settings.MIDAS_USER_ID + '/' + settings.MIDAS_PASSWORD
+
+                r = requests.get(urlPost)
+
+                result = r.text.split('/')
+
+                resultText = result[1]
+
+                time.sleep(10)
+        else:
+            result = r.text.split('/')
+            resultText = result[1]
+
+    else:
+        result = r.text.split('/')
+        resultText = result[1]
+
+        if result[0] == '00':
+            return redirect(reverse('home'))
 
     return render_to_response('error.html', {'error': resultText},
                               context_instance=RequestContext(request))
+    # return render_to_response('error.html', {'error': "Error"},
+    #                           context_instance=RequestContext(request))
 
+# def api_request(request):
+    # provider = request.POST['_provider']
+    # phone = request.POST['_phone']
+    # monto = request.POST['_curr']
+    #
+    # trans = Transection()
+    # trans.money = monto
+    # trans.save()
+    #
+    # urlPost = settings.MIDAS_URL + provider + '.midas?parametros=' + 'punto54-' + str(
+    #     trans.id) + '/' + settings.MIDAS_USER_ID + '/' + settings.MIDAS_PASSWORD + '/' + str(phone) + '/' + str(monto)
+    #
+    # r = requests.get(urlPost, timeout=46)
+    #
+    # requestTime = r.elapsed.total_seconds()
+    #
+    # resultText = ''
+    #
+    # if requestTime > 45:
+    #
+    #     urlPost = settings.MIDAS_URL + 'Verificacion.midas?parametros=' + 'punto54-' + str(
+    #         trans.id) + '/' + settings.MIDAS_USER_ID + '/' + settings.MIDAS_PASSWORD
+    #
+    #     r = requests.get(urlPost)
+    #
+    #     requestTime = r.elapsed.total_seconds()
+    #
+    #     if requestTime > 10:  # si la verificacion se demora 10 segundo hago 3 anulaciones
+    #         for i in range(1, 5):
+    #             urlPost = settings.MIDAS_URL + 'Reverso.midas?parametros=' + 'punto54-' + str(
+    #                 trans.id) + '/' + settings.MIDAS_USER_ID + '/' + settings.MIDAS_PASSWORD
+    #
+    #             r = requests.get(urlPost)
+    #
+    #             result = r.text.split('/')
+    #
+    #             resultText = result[1]
+    #
+    #             time.sleep(10)
+    #     else:
+    #         result = r.text.split('/')
+    #         resultText = result[1]
+    #
+    # else:
+    #     result = r.text.split('/')
+    #     resultText = result[1]
+    #
+    #     if result[0] == '00':
+    #         return redirect(reverse('home'))
+    #
+    # return render_to_response('error.html', {'error': resultText},
+    #                           context_instance=RequestContext(request))
 def logout(request):
     auth.logout(request)
     return redirect(reverse('home'))
