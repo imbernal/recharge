@@ -94,7 +94,7 @@
 <section id="banner">
 
 
-    <form action="{{ paypal_url }}" method="post" id="form">
+    <form action="{% url 'purchased' %}" method="post" id="form">
         {% csrf_token %}
         <h2>Haz muy feliz a una Persona!</h2>
         <div class="container">
@@ -119,7 +119,7 @@
                 {#            <input type="text" name="_amount" id="amount" placeholder="$ XX.XX">#}
                 <select  name="_curr" id="_curr" required>
                     <option value="">Monto a recargar</option>
-                    <option value="1">$1</option>
+                    <option value="$20">$15</option>
                     {#                <option value="20">$20</option>#}
                     {#                <option value="40">$40</option>#}
                     {#                <option value="50">$50</option>#}
@@ -144,10 +144,8 @@
         <article class="feature left">
             <span class="image"><img src="{% static 'images/iphone6.jpg' %}" alt=""/></span>
             <div class="content">
-                <h2>Descarga gratis nuestra app de iOS!</h2>
-                <p>La forma más conveniente y segura, de recargar a tus familiares y amigos desde tu iPhone en cualquier
-                    momento y lugar.
-                </p>
+                <h2>{{ appDescription.iOsTitulo }}</h2>
+                <p>{{ appDescription.iOsDescripcion }}</p>
                 <ul class="actions-store">
                     <li>
                         <a class="button-store" href="#" target="_blank">
@@ -160,10 +158,8 @@
         <article class="feature right">
             <span class="image"><img src="{% static 'images/android.jpg' %}" class="img-responsive" alt=""/></span>
             <div class="content">
-                <h2>Descarga gratis nuestra app de Android!</h2>
-                <p>La forma mas conveniente y segura, de recargar a tus familiares y amigos desde tu Smartphone Android
-                    en cualquier momento y lugar.
-                </p>
+                <h2>{{ appDescription.androidTitulo }}</h2>
+                <p>{{ appDescription.androidDescripcion }}</p>
                 <ul class="actions-store">
                     <li>
                         <a class="button-store" href="#" target="_blank">
@@ -271,7 +267,7 @@
     });
 
 </script>
-{% if user.is_authenticated %}
+{#{% if user.is_authenticated %}#}
     <script type="javascript">
         $('#sendButton').on('click', function () {
 
@@ -280,13 +276,13 @@
 
         });
     </script>
-{% else %}
-    <script>
-        $('#sendButton').click(function (e) {
-            e.preventDefault();
-            $('#myModal').modal();
-        });
-    </script>
-{% endif %}
+{#{% else %}#}
+{#    <script>#}
+{#        $('#sendButton').click(function (e) {#}
+{#            e.preventDefault();#}
+{#            $('#myModal').modal();#}
+{#        });#}
+{#    </script>#}
+{#{% endif %}#}
 </body>
 </html>

@@ -20,6 +20,15 @@ from django.contrib.auth.models import User
 class AboutUs(models.Model):
   text = models.CharField(max_length=250)
 
+class AppsDescription(models.Model):
+  iOsTitulo = models.CharField(max_length=250)
+  iOsDescripcion = models.CharField(max_length=250)
+  androidTitulo = models.CharField(max_length=250)
+  androidDescripcion = models.CharField(max_length=250)
+
+class Transection(models.Model):
+  money = models.CharField(max_length=250)
+
 class PaypalOption(models.Model):
   pdt_token = models.CharField(max_length=250)
   paypal_email = models.EmailField()

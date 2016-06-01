@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/1.9/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.9/ref/settings/
 """
-
+import dj_database_url
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'u2z7b-b#ns#x4kkl7!aucbx=r!2x)8f@41qznq@-^i5_xf8ilu'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -132,22 +132,45 @@ USE_L10N = True
 
 USE_TZ = True
 
-# RESOURCES_DIR = '/media/shared/src/django-paypal-store-example/samplesite/resources/'
-PAYPAL_PDT_TOKEN = '*** PAYPAY PDT TOKEN ***'
-PAYPAL_EMAIL = 'imbernal9203@gmail.com'
-PAYPAL_RETURN_URL = 'http://127.0.0.1:8000'
+# RESOURCES_DIR = '/media/shared/src/django-paypal-store-example/samplesite/resources/''
 
 
-PAYPAL_URL = 'https://www.sandbox.paypal.com/au/cgi-bin/webscr'
-PAYPAL_PDT_URL = 'https://www.sandbox.paypal.com/au/cgi-bin/webscr'
+# PAYPAL_URL = 'https://www.sandbox.paypal.com/au/cgi-bin/webscr'
+# PAYPAL_PDT_URL = 'https://www.sandbox.paypal.com/au/cgi-bin/webscr'
+
+# PAYPAL_URL = 'https://www.paypal.com/au/cgi-bin/webscr'
+#PAYPAL_PDT_URL = 'https://www.paypal.com/au/cgi-bin/webscr'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
+
+PROJECT_DIR=os.path.dirname(__file__)
+PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
+STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 STATIC_URL = '/static/'
+# STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+
+
 
 MIDAS_URL = 'https://prod01.midas-card.com/plataforma/ws2/'
 
 MIDAS_USER_ID = '12938'
 
 MIDAS_PASSWORD = '141516'
+
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.9/howto/static-files/
+# MEDIA_ROOT = os.path.join('app/', 'staticfiles')
+
+# STATIC_URL = '/static/'
+# STATIC_ROOT = 'static'
+# Extra places for collectstatic to find static files.
+# STATICFILES_DIRS = (
+#     os.path.join(PROJECT_ROOT , 'static'),
+# )
+
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
