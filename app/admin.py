@@ -4,4 +4,5 @@ from app.models import *
 admin.site.register(PaypalOption)
 admin.site.register(AboutUs)
 admin.site.register(AppsDescription)
-admin.site.register(Transection)
+admin.site.register(Transaction)
+admin.site.register(Notification)

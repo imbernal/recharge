@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-{% load staticfiles %}
+{% load static swampdragon_tags %}
 <html>
 <head>
     <title>Recharge - Homepage</title>
@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
     <link rel="stylesheet" type="text/css" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'assets/css/bootstrap-social.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/intlTelInput.css' %}">
 
     <!--[if lte IE 8]>
     <script src="assets/js/ie/html5shiv.js"></script><![endif]-->
@@ -94,13 +95,13 @@
 <section id="banner">
 
 
-    <form action="{% url 'purchased' %}" method="post" id="form">
+    <form action="{{ paypal_url }}" method="post" id="form">
         {% csrf_token %}
         <h2>Haz muy feliz a una Persona!</h2>
         <div class="container">
 
             <div class="col-md-4">
-                <select  name="_provider" id="provider" required="required">
+                <select name="_provider" id="provider" required="required">
                     <option value="">Seleccione un Proveedor</option>
                     <option value="Claro">Claro</option>
                     <option value="Orange">Orange</option>
@@ -112,17 +113,18 @@
             </div>
 
             <div class="col-md-4">
-                <input type="text"  required name="_phone" id="phone" placeholder="+(XX) XXXXXX">
+                <input type="text" required name="_phone" id="phone">
             </div>
 
             <div class="col-md-4">
                 {#            <input type="text" name="_amount" id="amount" placeholder="$ XX.XX">#}
-                <select  name="_curr" id="_curr" required>
+                <select name="_curr" id="_curr" required>
                     <option value="">Monto a recargar</option>
-                    <option value="1">$15</option>
-                    {#                <option value="20">$20</option>#}
-                    {#                <option value="40">$40</option>#}
-                    {#                <option value="50">$50</option>#}
+                    <option value="5.65">$5.65</option>
+                    <option value="6.78">$6.78</option>
+                    <option value="8.80">$8.80</option>
+                    <option value="11">$11</option>
+                    <option value="30">$30</option>
                 </select>
             </div>
         </div>
@@ -131,10 +133,12 @@
         <input type="hidden" name="cmd" value="_xclick">
         <input type="hidden" name="business" value="{{ paypal_email }}">
         <input type="hidden" name="item_name" id="phonePaypal" required aria-required="true">
+        <input type="hidden" name="item_number" id="item_number" required aria-required="true">
         <input type="hidden" name="currency_code" value="USD">
+        <input type="hidden" name="tax" value="1">
         <input type="hidden" name="return" value="{{ paypal_return_url }}">
         <input type="hidden" name="cancel_return" value="{{ paypal_return_url }}/">
-        <button type="submit" id="sendButton" class="button big special">Recargar</button>
+        <input type="submit" id="sendButton" class="button big special" value="Recargar">
     </form>
 </section>
 <!-- One -->
@@ -244,40 +248,104 @@
 
 <!-- Dependencies -->
 <script src="{% static 'assets/js/nav_mod.js' %}"></script>
+<script src="{% static 'assets/js/intlTelInput.min.js' %}"></script>
 <script src="{% static 'assets/js/jquery.validate.js' %}"></script>
-{#<script src="{% static 'assets/js/phoneValidate.js' %}"></script>#}
+<script src="http://localhost:9999/settings.js"></script>
+<script type="text/javascript" src="{% static 'swampdragon/js/dist/swampdragon.min.js' %}"></script>
+<script src="{% static 'assets/js/jquery.mask.min.js' %}"></script>
+<script src="{% static 'assets/js/notification.js' %}"></script>
+
 
 <!--[if lte IE 8]><script src="{% static 'assets/js/ie/respond.min.js' %}"></script><![endif]-->
 
 <script>
+    $(function () {
+        function guid() {
+            function s4() {
+                return Math.floor((1 + Math.random()) * 0x10000)
+                        .toString(16)
+                        .substring(1);
+            }
 
-    $('#sendButton').on('click', function () {
+            return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+                    s4() + '-' + s4() + s4() + s4();
+        }
 
-        var amount = $('#_curr').val();
+        $('#item_number').val(guid());
+    });
+
+
+
+    $('#sendButton').on('click', function (e) {
+
+        var phone = $('#phone').val(),
+                provider = $('#provider').val(),
+                item_number = $('#item_number').val(),
+                amount = $('#_curr').val();
+
+
         $('#amount').val(amount);
 
-        var phoneNumber = $('#phone').val();
-        $('#phonePaypal').val(phoneNumber);
+        $('#phonePaypal').val(phone);
 
-    });
+        e.preventDefault();
 
-    $('#form').validate({
-        rules:{
-            phone:{
-                required: true,
-                phoneUS: true
-            }
+        var new_phone = "";
+
+        for (var i = 0; i < phone.length; i++) {
+            if (phone[i] != '(' && phone[i] != ')' && phone[i] != ' ' && phone[i] != '(' && phone[i] != '-')
+                    new_phone += phone[i];
         }
+        console.log(new_phone);
+        $.ajax({
+                    method: 'POST',
+                    url: '/save_data/',
+                    data: {
+                        phone: new_phone,
+                        amount: amount,
+                        provider: provider,
+                        item_number: item_number
+                    }
+                })
+                .done(function (data) {
+                    console.log(data);
+                    form.submit();
+                })
+                .error(function (data) {
+                    console.log(data);
+                })
     });
 
+    $("#phone").intlTelInput({
+        allowDropdown: false,
+        //autoHideDialCode: false,
+        autoPlaceholder: true,
+        //dropdownContainer: "body",
+        // excludeCountries: ["us"],
+        // geoIpLookup: function(callback) {
+        //   $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+        //     var countryCode = (resp && resp.country) ? resp.country : "";
+        //     callback(countryCode);
+        //   });
+        // },
+        initialCountry: "do",
+        //nationalMode: true,
+        numberType: "MOBILE",
+        onlyCountries: ['do'],
+        // preferredCountries: ['cn', 'jp'],
+        //separateDialCode: true,
+        utilsScript: "static/assets/js/utils.js"
+    });
+
+    $(document).ready(function () {
+        $('#phone').mask('(000) 000-0000');
+    });
 </script>
 
 
-    <script type="javascript">
-        $('#sendButton').on('click', function () {
-            form.submit();
-        });
-    </script>
+<script type="javascript">
+
+</script>
 
 </body>
 </html>

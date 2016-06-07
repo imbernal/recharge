@@ -1,5 +1,13 @@
-$.validator.addMethod("phoneUS", function(phone_number, element) {
-    phone_number = phone_number.replace(/\s+/g, "");
-	return this.optional(element) || phone_number.length > 9 &&
-		phone_number.match(/^(1-?)?(\([2-9]\d{2}\)|[2-9]\d{2})-?[2-9]\d{2}-?\d{4}$/);
-}, "Please specify a valid phone number");
+/**
+ * Created by imbernal on 6/1/16.
+ */
+$(document).ready(function() {
+    $('#form')
+        .find('[name="_phone"]')
+            .intlTelInput({
+                utilsScript: 'static/assets/js/utils.js',
+                autoPlaceholder: true,
+                preferredCountries: ['fr', 'us', 'gb']
+            });
+
+});

@@ -22,7 +22,8 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.homepage, name='home'),
     url(r'^accounts/', include('allauth.urls')),
-    url(r'^logout/',views.logout,name='logout'),
-    url(r'^purchased/',views.purchased,name='purchased'),
-    url(r'^static/(?P<path>.*)$','django.views.static.serve',{'document_root': settings.STATIC_ROOT})
+    url(r'^logout/', views.logout, name='logout'),
+    url(r'^purchased/', views.purchased, name='purchased'),
+    url(r'^save_data/', views.save_data, name='save_data'),
+    url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT})
 ]
